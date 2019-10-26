@@ -48,9 +48,11 @@ class DetailFragment: Fragment() {
         viewModel.dataForecast.observe(this, Observer {
 
             for(data in it){
-                val str = "${data.time}  ${data.temp} °C ${data.description} \n"
-                string.append(str)
-                Log.d("mylog",str)
+                if(data.time.contains("12:00:00")){
+                    val str = "${data.time.removeSuffix("12:00:00")}  ${data.temp} °C ${data.description} \n"
+                    string.append(str)
+                }
+
             }
             Log.d("mylog",string.length.toString())
             tv_forecast.text = string
