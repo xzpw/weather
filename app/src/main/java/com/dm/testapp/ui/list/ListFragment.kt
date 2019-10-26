@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.dm.testapp.MainActivity
 import com.dm.testapp.R
 import com.dm.testapp.ui.NavigationRouter
@@ -39,6 +41,8 @@ class ListFragment: Fragment() {
         super.onStart()
         (activity as MainActivity).supportActionBar?.title = getString(R.string.app_name)
         viewModel.liveDataWeather.observe(this, Observer { adapter.setData(it) })
+        swipe_refresh.setOnRefreshListener { viewModel.fetchWeather() }
+        viewModel.liveRefresh.observe(this, Observer { swipe_refresh.isRefreshing = it })
     }
     fun initView(view: View){
         adapter = ListAraptor(getRouter())
@@ -46,4 +50,5 @@ class ListFragment: Fragment() {
         rv_list.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
         viewModel.fetchWeather()
     }
+
 }

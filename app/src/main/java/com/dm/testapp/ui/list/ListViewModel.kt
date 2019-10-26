@@ -14,13 +14,24 @@ class ListViewModel: ViewModel(), KoinComponent {
 
     val repo: RepoDatasource by inject()
     val liveDataWeather = MutableLiveData<List<WeatherModel>>()
+    val liveRefresh = MutableLiveData<Boolean>()
     val disposableBag = CompositeDisposable()
 
+    init {
+        liveRefresh.postValue(false)
+    }
+
     fun fetchWeather(){
+        liveRefresh.postValue(true)
        val d =   repo.getCurrent()
              ?.subscribeOn(Schedulers.io())
              ?.observeOn(AndroidSchedulers.mainThread())
-             ?.subscribe({data -> liveDataWeather.postValue(data)})
+             ?.subscribe({ data ->
+                 liveDataWeather.postValue(data)
+                 liveRefresh.postValue(false)
+
+             },
+                 { error-> liveRefresh.postValue(false)})
         d?.let { disposableBag.add(it) }
     }
 
