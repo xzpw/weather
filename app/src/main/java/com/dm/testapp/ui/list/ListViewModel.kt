@@ -15,6 +15,7 @@ class ListViewModel: ViewModel(), KoinComponent {
     val repo: RepoDatasource by inject()
     val liveDataWeather = MutableLiveData<List<WeatherModel>>()
     val liveRefresh = MutableLiveData<Boolean>()
+    val liveError = MutableLiveData<Boolean>()
     val disposableBag = CompositeDisposable()
 
     init {
@@ -23,6 +24,7 @@ class ListViewModel: ViewModel(), KoinComponent {
 
     fun fetchWeather(){
         liveRefresh.postValue(true)
+        liveError.postValue(false)
        val d =   repo.getCurrent()
              ?.subscribeOn(Schedulers.io())
              ?.observeOn(AndroidSchedulers.mainThread())
@@ -31,7 +33,8 @@ class ListViewModel: ViewModel(), KoinComponent {
                  liveRefresh.postValue(false)
 
              },
-                 { error-> liveRefresh.postValue(false)})
+                 { error-> liveRefresh.postValue(false)
+                 liveError.postValue(true)})
         d?.let { disposableBag.add(it) }
     }
 

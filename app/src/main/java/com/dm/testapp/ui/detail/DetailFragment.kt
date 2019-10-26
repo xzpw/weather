@@ -39,10 +39,11 @@ class DetailFragment: Fragment() {
 
     override fun onStart() {
         super.onStart()
-       val city = arguments?.getParcelable<WeatherModel>(ARG_DETAIL)?.city
+        val argument = arguments?.getParcelable<WeatherModel>(ARG_DETAIL)
+        val city = argument?.city
         (activity as MainActivity).supportActionBar?.title = city
-        tv_detail_temp.text = arguments?.getParcelable<WeatherModel>(ARG_DETAIL)?.temp.toString() + "°C"
-        tv_detail_desc.text = arguments?.getParcelable<WeatherModel>(ARG_DETAIL)?.description
+        tv_detail_temp.text = argument?.temp.toString() + "°C"
+        tv_detail_desc.text = argument?.description
         viewModel.feathForecast(city)
         val string:StringBuilder = StringBuilder()
         viewModel.dataForecast.observe(this, Observer {
@@ -54,7 +55,6 @@ class DetailFragment: Fragment() {
                 }
 
             }
-            Log.d("mylog",string.length.toString())
             tv_forecast.text = string
         })
     }

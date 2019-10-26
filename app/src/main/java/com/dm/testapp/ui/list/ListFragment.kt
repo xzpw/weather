@@ -43,6 +43,8 @@ class ListFragment: Fragment() {
         viewModel.liveDataWeather.observe(this, Observer { adapter.setData(it) })
         swipe_refresh.setOnRefreshListener { viewModel.fetchWeather() }
         viewModel.liveRefresh.observe(this, Observer { swipe_refresh.isRefreshing = it })
+        viewModel.liveError.observe(this, Observer {
+            imageView2.visibility = if(it ) View.VISIBLE else View.INVISIBLE })
     }
     fun initView(view: View){
         adapter = ListAraptor(getRouter())

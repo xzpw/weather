@@ -3,6 +3,7 @@ package com.dm.testapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import com.dm.testapp.data.WeatherModel
 import com.dm.testapp.repo.RepoDatasource
 import com.dm.testapp.ui.NavigationRouter
@@ -22,6 +23,10 @@ class MainActivity : AppCompatActivity(),NavigationRouter {
         showList()
         setSupportActionBar(findViewById(R.id.toolbar))
         toolbar.title = "Weather"
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
     }
 
     override fun showList() {
