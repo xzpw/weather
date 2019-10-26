@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity(),NavigationRouter {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         showList()
-        setSupportActionBar(toolbar)
+        setSupportActionBar(findViewById(R.id.toolbar))
         toolbar.title = "Weather"
     }
 

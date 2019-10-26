@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.dm.testapp.MainActivity
 import com.dm.testapp.R
 import com.dm.testapp.data.WeatherModel
 import kotlinx.android.synthetic.main.detail_fragmen.*
@@ -39,6 +40,7 @@ class DetailFragment: Fragment() {
     override fun onStart() {
         super.onStart()
        val city = arguments?.getParcelable<WeatherModel>(ARG_DETAIL)?.city
+        (activity as MainActivity).supportActionBar?.title = city
         tv_detail_temp.text = arguments?.getParcelable<WeatherModel>(ARG_DETAIL)?.temp.toString() + "°C"
         tv_detail_desc.text = arguments?.getParcelable<WeatherModel>(ARG_DETAIL)?.description
         viewModel.feathForecast(city)

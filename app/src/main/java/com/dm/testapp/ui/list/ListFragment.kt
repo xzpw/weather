@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dm.testapp.MainActivity
 import com.dm.testapp.R
 import com.dm.testapp.ui.NavigationRouter
 import kotlinx.android.synthetic.main.list_fragment.*
@@ -36,6 +37,7 @@ class ListFragment: Fragment() {
 
     override fun onStart() {
         super.onStart()
+        (activity as MainActivity).supportActionBar?.title = getString(R.string.app_name)
         viewModel.liveDataWeather.observe(this, Observer { adapter.setData(it) })
     }
     fun initView(view: View){
